@@ -15,7 +15,7 @@ contract FirstNFT is Initializable, ERC721EnumerableUpgradeable, ERC721URIStorag
     mapping(address => uint256[]) tokensByOwner;
     mapping(uint256 => uint256) tokenIndex;
     
-    function Initialize() public initializer {
+    function initialize() public initializer {
         __ERC721_init("Second NFT", "SCT");
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
