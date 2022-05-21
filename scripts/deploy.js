@@ -3,7 +3,7 @@ const { ethers, upgrades } = require('hardhat');
 async function main() {
 
   const firstNFT = await ethers.getContractFactory("FirstNFT");
-  const firstNFTContract = await upgrades.deployProxy(firstNFT, [], { initializer: 'initialize'});
+  const firstNFTContract = await upgrades.deployProxy(firstNFT, [10000000], { initializer: 'initialize'});
   console.log("FirstNFT deployed to:", firstNFTContract.address);
 
   const secondNFT = await ethers.getContractFactory("SecondNFT");
