@@ -15,14 +15,11 @@ contract FirstNFT is Initializable, ERC721EnumerableUpgradeable, ERC721URIStorag
     mapping(address => uint256[]) tokensByOwner;
     mapping(uint256 => uint256) tokenIndex;
     
-    function Initialize(uint256 time, address _secondNFT) public initializer {
+    function Initialize() public initializer {
         __ERC721_init("Second NFT", "SCT");
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __Ownable_init();
-        allowTime = time;
-
-        SecondNFT = _secondNFT;
     }
 
     function mint() public payable {
@@ -32,6 +29,14 @@ contract FirstNFT is Initializable, ERC721EnumerableUpgradeable, ERC721URIStorag
         tokensByOwner[msg.sender].push(tokenID);
         tokenIndex[tokenID] = tokensByOwner[msg.sender].length - 1;
         _safeMint(msg.sender, tokenID);
+    }
+
+    function setAllowLimit(uint256 time) public onlyOwner {
+        allowTime = time;
+    }
+
+    function setSecondNFT(address secondNFT) public onlyOwner {
+        SecondNFT = secondNFT;
     }
 
     function escrow(uint256 tokenId, address account) public {
