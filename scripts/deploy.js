@@ -6,9 +6,9 @@ async function main() {
   const firstNFTContract = await upgrades.deployProxy(firstNFT, [10000000], { initializer: 'initialize'});
   console.log("FirstNFT deployed to:", firstNFTContract.address);
 
-  // const secondNFT = await ethers.getContractFactory("SecondNFT");
-  // const secondNFTContract = await upgrades.deployProxy(secondNFT, [], { initializer: 'initialize'});
-  // console.log("SecondNFT deployed to:", secondNFTContract.address);
+  const secondNFT = await ethers.getContractFactory("SecondNFT");
+  const secondNFTContract = await upgrades.deployProxy(secondNFT, [], { initializer: 'initialize'});
+  console.log("SecondNFT deployed to:", secondNFTContract.address);
 
 }
 

@@ -16,4 +16,4 @@ npx hardhat help
 
 
 FirstNFT deployed to: 0x739124821e8AE058d7911B5dA556CC873e63D022
-SecondNFT deployed to: 0xA5a689b21fdE7cEef590324f487128a7B792e349
+SecondNFT deployed to: 0x6c57C394Fb3738f5be75dC4cf26214FBDDbF8801
