@@ -14,6 +14,8 @@ contract SecondNFT is Initializable, ERC721EnumerableUpgradeable, ERC721URIStora
     mapping (uint256 => uint256) public tokenMap;  //second tokenID -> first tokenID
     mapping (address => uint256[]) public tokensByOwner;
     mapping (uint256 => uint256) tokenIndex;
+
+    mapping (address => uint256[]) public escrowedNFTsByOwner;
     
     function initialize() public initializer {
         __ERC721_init("First NFT", "FST");
@@ -28,12 +30,17 @@ contract SecondNFT is Initializable, ERC721EnumerableUpgradeable, ERC721URIStora
 
     function escrowFristNFT(uint256 tokenID, address account) public {
         require(msg.sender == FirstNFT, "You are not firstnft contract!");
-        uint256 tokenId = totalSupply() + 1;
-        tokenMap[tokenId] = tokenID;
-        mint(account, tokenId);
+        escrowedNFTsByOwner[account].push(tokenID);
     }
 
-    function mint(address account, uint256 tokenId) public{
+    function mint() public{
+        address account = msg.sender;
+        require(escrowedNFTsByOwner[account].length > 0, "You can't mint now!");
+        uint256 firstTokenId = escrowedNFTsByOwner[account][escrowedNFTsByOwner[account].length - 1];
+        escrowedNFTsByOwner[account].pop();
+
+        uint256 tokenId = totalSupply() + 1;
+        tokenMap[tokenId] = firstTokenId;
         tokensByOwner[account].push(tokenId);
         tokenIndex[tokenId] = tokensByOwner[account].length - 1;
         _safeMint(msg.sender, tokenId);
